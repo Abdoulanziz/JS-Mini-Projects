@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            height: 100vh;
+            max-width: 1100px;
+            margin: 0 auto;
+            background-color: antiquewhite;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+
+            height: 50%;
+            width: 50%;
+        }
+
+        .board-cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            cursor: pointer;
+            background-color: palegoldenrod;
+            border: 1px solid rgb(253, 171, 100);
+        }
+
+        /* .board-cell:nth-child(5) {
+            transform: scale(1.5);
+            background-color: yellowgreen;
+            
+        } */
+
+        /* .board-cell:nth-child(5) {
+            transition: all 5.3s ;
+        } */
+
+        .board-cell::after {
+            font-size: large;
+            color: #1da1f2;
+            content: '😋';
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="game-board">
+            <div id="board-cell-1" class="board-cell"></div>
+            <div id="board-cell-2" class="board-cell"></div>
+            <div id="board-cell-3" class="board-cell"></div>
+            <div id="board-cell-4" class="board-cell"></div>
+            <div id="board-cell-5" class="board-cell"></div>
+            <div id="board-cell-6" class="board-cell"></div>
+            <div id="board-cell-7" class="board-cell"></div>
+            <div id="board-cell-8" class="board-cell"></div>
+            <div id="board-cell-9" class="board-cell"></div>
+        </div>
+    </div>
+    
+    <script>
+        let player1 = [];
+            player2 = [];
+
+        const activePlayer = 1;
+        const winner = player1;
+
+        let gameList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        let autoChoice;
+        let currentGameCellID;
+        
+        const gameCellBackgroundColors = {
+            player1: "#fff",
+            player2: "#dedede"
+        }
+
+        const gameContainer = document.querySelector('.container');
+            gameBoard = document.querySelector('.game-board');
+
+        let gameCells = document.querySelectorAll('.board-cell');
+
+        gameCells.forEach(gameCell => {
+            gameCell.addEventListener('click', event => {
+                gameCellID = getCellID(gameCell.id);
+                playGame(gameCell, gameCellID);
+                
+            })
+        });
+
+        function getCellID(cellID){
+            let rawCellID = 0;
+            switch(cellID){
+                case "board-cell-1":
+                    rawCellID = 1;
+                    break;
+                case "board-cell-2":
+                    rawCellID = 2;
+                    break;
+                case "board-cell-3":
+                    rawCellID = 3;
+                    break;
+                case "board-cell-4":
+                    rawCellID = 4;
+                    break;
+                case "board-cell-5":
+                    rawCellID = 5;
+                    break;
+                case "board-cell-6":
+                    rawCellID = 6;
+                    break;
+                case "board-cell-7":
+                    rawCellID = 7;
+                    break;
+                case "board-cell-8":
+                    rawCellID = 8;
+                    break;
+                case "board-cell-9":
+                    rawCellID = 9;
+                    break;
+                default:
+                    rawCellID = 0;
+            }
+            return rawCellID;
+        }
+        
+        function playGame(gameCell, gameCellID){
+            gameCell.style.pointerEvents = 'none';
+
+            gameCell.style.backgroundColor = gameCellBackgroundColors.player1;
+            player1.push(gameCellID);
+            
+
+            currentGameCellID = gameList.indexOf(gameCellID);
+            if (currentGameCellID > -1) {
+                gameList.splice(currentGameCellID, 1);
+            }
+
+
+            getWinner();
+            autoChoice = gameList[Math.floor(Math.random() * gameList.length)];
+
+            setTimeout(function(){
+                autoPlay(autoChoice);
+            }, 350);
+            
+            
+            console.log("Player1 "+ JSON.stringify(player1));
+            console.log("Player2 "+ JSON.stringify(player2));
+            console.log("gameList = "+ JSON.stringify(gameList));
+
+            /*
+            if(activePlayer == 1){
+                gameCell.style.backgroundColor = gameCellBackgroundColors.player1;
+                player1.push(gameCellID);
+                activePlayer = 2;
+                console.log("Player1 "+ JSON.stringify(player1));
+            }else{
+                gameCell.style.backgroundColor = gameCellBackgroundColors.player2;
+                player2.push(gameCellID);
+                activePlayer = 1;
+                console.log("Player2 "+ JSON.stringify(player2));
+            }
+            */
+           
+            
+        }
+
+        function autoPlay(autoChoice){
+            let gameCell = document.getElementById('board-cell-'+autoChoice+'');
+            gameCell.style.backgroundColor = gameCellBackgroundColors.player2;
+            gameCell.style.pointerEvents = 'none';
+            player2.push(autoChoice);
+
+            currentGameCellID = gameList.indexOf(autoChoice);
+            if (currentGameCellID > -1) {
+                gameList.splice(currentGameCellID, 1);
+            }
+
+            getWinner();
+            
+        }
+
+        function getWinner(){
+            const win = [
+                [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9],
+
+                [1, 4, 7],
+                [2, 5, 8],
+                [3, 6, 9],
+
+                [1, 5, 9],
+                [3, 5, 7]
+            ]
+
+            const winConditions = [
+                player1.includes(win[0][0]) && player1.includes(win[0][1]) && player1.includes(win[0][2]) ||
+                player1.includes(win[1][0]) && player1.includes(win[1][1]) && player1.includes(win[1][2]) ||
+                player1.includes(win[2][0]) && player1.includes(win[2][1]) && player1.includes(win[2][2]) ||
+                player1.includes(win[3][0]) && player1.includes(win[3][1]) && player1.includes(win[3][2]) ||
+                player1.includes(win[4][0]) && player1.includes(win[4][1]) && player1.includes(win[4][2]) ||
+                player1.includes(win[5][0]) && player1.includes(win[5][1]) && player1.includes(win[5][2]) ||
+                player1.includes(win[6][0]) && player1.includes(win[6][1]) && player1.includes(win[6][3]) ||
+                player1.includes(win[7][0]) && player1.includes(win[7][1]) && player1.includes(win[7][3]) 
+            ];
+
+            const hasPlayer1Won = any(winConditions);
+            const hasPlayer2Won = any(winConditions);
+
+            if(hasPlayer1Won){
+                alert("Congs! Player1");
+                endGame();
+                return;
+            }else if(hasPlayer2Won){
+                alert("Congs! Player2");
+                endGame();
+                return;
+            }
+            
+
+        }
+
+        function endGame(){
+            let centerCell = document.querySelector('.board-cell:nth-child(5)');
+            centerCell.style.transition = "all 3.5s";
+            centerCell.style.transform = "scale(2.5)";
+            centerCell.innerHTML = "Congs!";
+        }
+
+
+        // function arrayRemove(arr, value) { 
+
+        //     return arr.filter(function(ele){ 
+        //         return ele != value; 
+        //     });
+        // }
+        
+        // var result = arrayRemove(array, 6);
+        // result = [1, 2, 3, 4, 5, 7, 8, 9, 0]
+
+        function any(iterable) {
+            for (var index = 0; index < iterable.length; index++) {
+                if (iterable[index]) return true;
+            }
+            return false;
+        }
+
+        function all(iterable) {
+            for (var index = 0; index < iterable.length; index++) {
+                if (!iterable[index]) return false;
+            }
+            return true;
+        }
+
+        
+        
+    </script>
+</body>
+</html>
