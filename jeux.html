@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,24 +38,14 @@
             border: 1px solid rgb(253, 171, 100);
         }
 
-        /* .board-cell:nth-child(5) {
-            transform: scale(1.5);
-            background-color: yellowgreen;
-            
-        } */
-
-        /* .board-cell:nth-child(5) {
-            transition: all 5.3s ;
-        } */
-
         .board-cell::after {
             font-size: large;
             color: #1da1f2;
             content: '😋';
         }
-
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -70,10 +61,10 @@
             <div id="board-cell-9" class="board-cell"></div>
         </div>
     </div>
-    
+
     <script>
         let player1 = [];
-            player2 = [];
+        player2 = [];
 
         const activePlayer = 1;
         const winner = player1;
@@ -81,14 +72,14 @@
         let gameList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         let autoChoice;
         let currentGameCellID;
-        
+
         const gameCellBackgroundColors = {
             player1: "#fff",
             player2: "#dedede"
         }
 
         const gameContainer = document.querySelector('.container');
-            gameBoard = document.querySelector('.game-board');
+        gameBoard = document.querySelector('.game-board');
 
         let gameCells = document.querySelectorAll('.board-cell');
 
@@ -96,13 +87,13 @@
             gameCell.addEventListener('click', event => {
                 gameCellID = getCellID(gameCell.id);
                 playGame(gameCell, gameCellID);
-                
+
             })
         });
 
-        function getCellID(cellID){
+        function getCellID(cellID) {
             let rawCellID = 0;
-            switch(cellID){
+            switch (cellID) {
                 case "board-cell-1":
                     rawCellID = 1;
                     break;
@@ -135,13 +126,13 @@
             }
             return rawCellID;
         }
-        
-        function playGame(gameCell, gameCellID){
+
+        function playGame(gameCell, gameCellID) {
             gameCell.style.pointerEvents = 'none';
 
             gameCell.style.backgroundColor = gameCellBackgroundColors.player1;
             player1.push(gameCellID);
-            
+
 
             currentGameCellID = gameList.indexOf(gameCellID);
             if (currentGameCellID > -1) {
@@ -152,14 +143,14 @@
             getWinner();
             autoChoice = gameList[Math.floor(Math.random() * gameList.length)];
 
-            setTimeout(function(){
+            setTimeout(function () {
                 autoPlay(autoChoice);
             }, 350);
-            
-            
-            console.log("Player1 "+ JSON.stringify(player1));
-            console.log("Player2 "+ JSON.stringify(player2));
-            console.log("gameList = "+ JSON.stringify(gameList));
+
+
+            console.log("Player1 " + JSON.stringify(player1));
+            console.log("Player2 " + JSON.stringify(player2));
+            console.log("gameList = " + JSON.stringify(gameList));
 
             /*
             if(activePlayer == 1){
@@ -174,12 +165,12 @@
                 console.log("Player2 "+ JSON.stringify(player2));
             }
             */
-           
-            
+
+
         }
 
-        function autoPlay(autoChoice){
-            let gameCell = document.getElementById('board-cell-'+autoChoice+'');
+        function autoPlay(autoChoice) {
+            let gameCell = document.getElementById('board-cell-' + autoChoice + '');
             gameCell.style.backgroundColor = gameCellBackgroundColors.player2;
             gameCell.style.pointerEvents = 'none';
             player2.push(autoChoice);
@@ -190,10 +181,10 @@
             }
 
             getWinner();
-            
+
         }
 
-        function getWinner(){
+        function getWinner() {
             const win = [
                 [1, 2, 3],
                 [4, 5, 6],
@@ -215,26 +206,26 @@
                 player1.includes(win[4][0]) && player1.includes(win[4][1]) && player1.includes(win[4][2]) ||
                 player1.includes(win[5][0]) && player1.includes(win[5][1]) && player1.includes(win[5][2]) ||
                 player1.includes(win[6][0]) && player1.includes(win[6][1]) && player1.includes(win[6][3]) ||
-                player1.includes(win[7][0]) && player1.includes(win[7][1]) && player1.includes(win[7][3]) 
+                player1.includes(win[7][0]) && player1.includes(win[7][1]) && player1.includes(win[7][3])
             ];
 
             const hasPlayer1Won = any(winConditions);
             const hasPlayer2Won = any(winConditions);
 
-            if(hasPlayer1Won){
+            if (hasPlayer1Won) {
                 alert("Congs! Player1");
                 endGame();
                 return;
-            }else if(hasPlayer2Won){
+            } else if (hasPlayer2Won) {
                 alert("Congs! Player2");
                 endGame();
                 return;
             }
-            
+
 
         }
 
-        function endGame(){
+        function endGame() {
             let centerCell = document.querySelector('.board-cell:nth-child(5)');
             centerCell.style.transition = "all 3.5s";
             centerCell.style.transform = "scale(2.5)";
@@ -248,7 +239,7 @@
         //         return ele != value; 
         //     });
         // }
-        
+
         // var result = arrayRemove(array, 6);
         // result = [1, 2, 3, 4, 5, 7, 8, 9, 0]
 
@@ -266,8 +257,9 @@
             return true;
         }
 
-        
-        
+
+
     </script>
 </body>
+
 </html>
