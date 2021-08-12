@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+        body {
+            font-family: "Roboto", sans-serif;
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        input,
+        button#btn-save-todo {
+            padding: .5rem;
+            border: solid 1px #f4f4f4;
+            border-radius: .5rem;
+            background-color: #f4f4f4;
+        }
+
+        input {
+            color: rgb(116, 113, 113);
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        button#btn-save-todo {
+            transform: scale(1.1);
+        }
+
+        button#btn-save-todo:hover {
+            background-color: antiquewhite;
+        }
+
+        .todos {
+            margin-top: .5rem;
+            height: 40rem;
+        }
+
+        .todo {
+            display: flex;
+            justify-content: center;
+            margin: 5px 0;
+            padding: 5px 10px;
+            border-radius: .5rem;
+            background-color: #f4f4f4;
+        }
+
+        h6 {
+            cursor: pointer;
+        }
+
+        h6.edit {
+            margin-left: auto;
+        }
+
+        h6.delete {
+            margin-left: .3rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h3 class="app-name">Todo List App</h3>
+        </div>
+        <div class="body">
+            <div class="add-new-todo">
+                <input type="text" name="" id="input-todo" placeholder="New todo item">
+                <button id="btn-save-todo">Save</button>
+            </div>
+            <div class="todos">
+                <!-- <div class="todo">
+                    <h5 class="title">Going to school</h5>
+                    <h6 class="edit">Edit</h6>
+                    <h6 class="delete">Delete</h6>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <script>
+
+
+        document.querySelector("#btn-save-todo").addEventListener("click", (event) => {
+            const value = document.querySelector("#input-todo").value;
+            if (value.length > 0) {
+                todoBuilder(value);
+                document.querySelector("#input-todo").value = "";
+            }
+        });
+
+        function todoBuilder(value) {
+            const todo = document.createElement("div");
+            todo.classList.add("todo");
+            const title = document.createElement("h5");
+            title.classList.add("title");
+            title.innerText = value;
+            todo.append(title);
+
+            const editBtn = document.createElement("h6");
+            editBtn.classList.add("edit");
+            editBtn.innerText = "Edit";
+            todo.append(editBtn);
+
+            const deleteBtn = document.createElement("h6");
+            deleteBtn.classList.add("delete");
+            deleteBtn.innerText = "Delete";
+            todo.append(deleteBtn);
+
+            document.querySelector(".todos").append(todo);
+        }
+    </script>
+</body>
+
+</html>
