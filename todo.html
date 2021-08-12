@@ -94,22 +94,56 @@
         </div>
     </div>
     <script>
+        fetchTodosFromLocalStorage();
 
-
+        let todosList = new Array();
         document.querySelector("#btn-save-todo").addEventListener("click", (event) => {
-            const value = document.querySelector("#input-todo").value;
+            let value = document.querySelector("#input-todo").value;
+            value = caplitalizeFirstLetter(value);
             if (value.length > 0) {
-                todoBuilder(value);
+                const todoObj = todoBuilder(value);
+                document.querySelector(".todos").append(todoObj);
                 document.querySelector("#input-todo").value = "";
+
+                const todo = {
+                    id: generateRandStr(8),
+                    title: value,
+                    isComplete: false
+                };
+                todosList.push(todo);
+                localStorage.setItem("Todos", JSON.stringify(todosList));
+                console.log(localStorage.getItem("Todos"));
             }
+            console.log(generateRandStr(8));
         });
+
+        function generateRandStr(size) {
+            let str = "";
+            const chars = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (let i = 0; i < size; i++) {
+                let index = Math.floor(Math.random() * (0, chars.length - 1) + 0);
+                str += chars[index];
+            }
+            return str;
+        }
+
+        function fetchTodosFromLocalStorage() {
+            if (localStorage.getItem("Todos")) {
+                let todos = JSON.parse(localStorage.getItem("Todos"));
+                todos.forEach(todo => {
+                    let value = caplitalizeFirstLetter(todo.title);
+                    const todoObj = todoBuilder(value);
+                    document.querySelector(".todos").append(todoObj);
+                });
+            }
+        }
 
         function todoBuilder(value) {
             const todo = document.createElement("div");
             todo.classList.add("todo");
             const title = document.createElement("h5");
             title.classList.add("title");
-            title.innerText = value;
+            title.innerText = limitStrLen(value, 25);
             todo.append(title);
 
             const editBtn = document.createElement("h6");
@@ -121,8 +155,23 @@
             deleteBtn.classList.add("delete");
             deleteBtn.innerText = "Delete";
             todo.append(deleteBtn);
+            return todo;
+        }
 
-            document.querySelector(".todos").append(todo);
+        function limitStrLen(str, len) {
+            let newStr = str;
+            if (str.length >= len) {
+                newStr = str.slice(0, len);
+                return `${newStr}...`;
+            }
+            return newStr;
+        }
+
+        function caplitalizeFirstLetter(str) {
+            const firstLetter = str.charAt(0);
+            const otherLetters = str.slice(1, str.length);
+            const newStr = firstLetter.toUpperCase() + otherLetters;
+            return newStr;
         }
     </script>
 </body>
