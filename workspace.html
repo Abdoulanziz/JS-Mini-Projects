@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Space</title>
+</head>
+
+<body>
+    <script>
+        function generateRandomStr(strLength) {
+            let randomStr = "";
+            const characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (let i = 0; i < strLength; i++) {
+                const randomIndex = Math.floor(Math.random() * (characters.length - 0) - 0);
+                randomStr += characters[randomIndex];
+            }
+            return randomStr;
+        }
+        console.log(generateRandomStr(20));
+    </script>
+</body>
+
+</html>
