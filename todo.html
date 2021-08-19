@@ -101,15 +101,22 @@
             let value = document.querySelector("#input-todo").value;
             value = caplitalizeFirstLetter(value);
             if (value.length > 0) {
-                const todoObj = todoBuilder(value);
-                document.querySelector(".todos").append(todoObj);
-                document.querySelector("#input-todo").value = "";
-
                 const todo = {
                     id: generateRandStr(8),
                     title: value,
                     isComplete: false
                 };
+
+                const todoObj = todoBuilder(todo);
+                document.querySelector(".todos").append(todoObj);
+                document.querySelector("#input-todo").value = "";
+
+
+                // Before we save new todo
+                // Grab existing todos and
+                // recreate the array including the new todo
+                todosList = JSON.parse(localStorage.getItem("Todos"));
+                // prevent resetting the todoList
                 todosList.push(todo);
                 localStorage.setItem("Todos", JSON.stringify(todosList));
                 console.log(localStorage.getItem("Todos"));
@@ -131,15 +138,30 @@
             if (localStorage.getItem("Todos")) {
                 let todos = JSON.parse(localStorage.getItem("Todos"));
                 todos.forEach(todo => {
-                    let value = caplitalizeFirstLetter(todo.title);
-                    const todoObj = todoBuilder(value);
+                    const todoObj = todoBuilder(todo);
                     document.querySelector(".todos").append(todoObj);
                 });
             }
         }
 
-        function todoBuilder(value) {
+        function deleteTodo(event) {
+            if (event.target.innerText == "Delete") {
+                todosList = JSON.parse(localStorage.getItem("Todos"));
+
+                todosList.forEach(todo => {
+                    if (event.target.parentElement.id === todo.id) {
+                        todosList.splice(todo, 1);
+                        event.target.parentElement.remove();
+                        localStorage.setItem("Todos", JSON.stringify(todosList));
+                    }
+                });
+            }
+        }
+
+        function todoBuilder(td) {
+            const value = caplitalizeFirstLetter(td.title);
             const todo = document.createElement("div");
+            todo.setAttribute("id", td.id);
             todo.classList.add("todo");
             const title = document.createElement("h5");
             title.classList.add("title");
@@ -155,6 +177,7 @@
             deleteBtn.classList.add("delete");
             deleteBtn.innerText = "Delete";
             todo.append(deleteBtn);
+            todo.addEventListener("click", deleteTodo);
             return todo;
         }
 
