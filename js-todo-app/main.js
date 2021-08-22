@@ -19,7 +19,12 @@ document.querySelector("#btn-save-todo").addEventListener("click", (event) => {
         // Before we save new todo
         // Grab existing todos and
         // recreate the array including the new todo
-        todosList = JSON.parse(localStorage.getItem("Todos"));
+
+        if (localStorage.getItem("Todos")) {
+            todosList = JSON.parse(localStorage.getItem("Todos"));
+        } else {
+            todosList = [];
+        }
         // prevent resetting the todoList
         todosList.push(todo);
         localStorage.setItem("Todos", JSON.stringify(todosList));
@@ -48,15 +53,27 @@ function fetchTodosFromLocalStorage() {
     }
 }
 
-function deleteTodo(event) {
+function actionTodo(event) {
+    todosList = JSON.parse(localStorage.getItem("Todos"));
     if (event.target.innerText == "Delete") {
-        todosList = JSON.parse(localStorage.getItem("Todos"));
-
         todosList.forEach(todo => {
             if (event.target.parentElement.id === todo.id) {
-                todosList.splice(todo, 1);
-                event.target.parentElement.remove();
-                localStorage.setItem("Todos", JSON.stringify(todosList));
+                if (confirm("Sure?")) {
+                    todosList.splice(todo, 1);
+                    event.target.parentElement.remove();
+                    localStorage.setItem("Todos", JSON.stringify(todosList));
+                }
+            }
+        });
+    } else if (event.target.innerText == "Edit") {
+        todosList.forEach(todo => {
+            if (event.target.parentElement.id === todo.id) {
+                const newTitle = prompt(todo.title);
+                if (newTitle) {
+                    event.target.parentElement.querySelector(".title").innerText = caplitalizeFirstLetter(newTitle);
+                    todo.title = newTitle;
+                    localStorage.setItem("Todos", JSON.stringify(todosList));
+                }
             }
         });
     }
@@ -81,7 +98,7 @@ function todoBuilder(td) {
     deleteBtn.classList.add("delete");
     deleteBtn.innerText = "Delete";
     todo.append(deleteBtn);
-    todo.addEventListener("click", deleteTodo);
+    todo.addEventListener("click", actionTodo);
     return todo;
 }
 
