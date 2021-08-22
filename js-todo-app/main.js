@@ -26,11 +26,10 @@ document.querySelector("#btn-save-todo").addEventListener("click", (event) => {
             todosList = [];
         }
         // prevent resetting the todoList
-        todosList.push(todo);
+        // todosList.push(todo);
+        todosList.unshift(todo);
         localStorage.setItem("Todos", JSON.stringify(todosList));
-        console.log(localStorage.getItem("Todos"));
     }
-    console.log(generateRandStr(8));
 });
 
 function generateRandStr(size) {
@@ -46,6 +45,7 @@ function generateRandStr(size) {
 function fetchTodosFromLocalStorage() {
     if (localStorage.getItem("Todos")) {
         let todos = JSON.parse(localStorage.getItem("Todos"));
+        // todos = todos.reverse();
         todos.forEach(todo => {
             const todoObj = todoBuilder(todo);
             document.querySelector(".todos").append(todoObj);
