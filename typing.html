@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>It's going to type..</title>
+</head>
+
+<body>
+
+    <script>
+        const text = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus voluptatibus corporis vitae velit consequuntur neque vero perspiciatis a incidunt quae tempora provident tempore cumque sed doloribus, facere ducimus illo earum deleniti, ullam quis dolore harum mollitia nisi. Perspiciatis enim, tenetur dignissimos aliquam vero saepe, dolores pariatur, asperiores possimus ducimus exercitationem. Tempora itaque, dignissimos ipsum nihil repudiandae obcaecati esse odit hic minima quibusdam, quas quam unde nesciunt earum sapiente officiis consectetur. Reprehenderit architecto, corrupti temporibus praesentium iure exercitationem modi qui maxime repellat corporis doloremque culpa quasi similique eos, quaerat ipsum consequatur omnis sequi? Odio eum beatae ratione cumque sit iste doloribus reiciendis illo, quisquam eveniet dolorem quae recusandae, maiores eligendi dicta id ducimus harum. Magni id iure, ea corporis dolorum blanditiis laborum aperiam ut rem incidunt dolores beatae voluptates consectetur nobis consequuntur explicabo sint praesentium repellat neque sit omnis animi culpa recusandae itaque. Recusandae est animi veniam, voluptates saepe nemo accusantium dolor nostrum vero, enim hic cum ea repellendus! Tempora odio ex similique, error nesciunt optio expedita quos asperiores, natus cum necessitatibus consectetur et iusto non commodi maxime eveniet minus nobis fugiat doloribus nulla beatae. Totam rerum iste inventore quam necessitatibus soluta provident unde delectus illum assumenda nihil quod praesentium eveniet earum quos, neque eligendi quibusdam saepe facere, aliquam blanditiis distinctio consequatur maiores. Mollitia ipsam asperiores, ex odio sapiente veritatis hic reprehenderit exercitationem voluptatum quasi rem, facilis molestiae. Voluptates a earum alias commodi repellat quibusdam iste! Provident veniam quos, distinctio, atque a quo ducimus, quae ullam quia laborum quaerat ab doloribus dolore natus quisquam nihil quis sed! Quis, assumenda at. Dicta, unde, harum impedit ex numquam placeat facilis, quis fuga suscipit recusandae accusamus. Minus obcaecati est asperiores fugit voluptates consectetur nisi voluptas vel quisquam optio. Maiores sit aliquam exercitationem accusantium ut vel laboriosam officia hic eos veniam possimus nemo, necessitatibus saepe! Dolor error adipisci blanditiis dolore assumenda ut at magnam quo repellendus? Cupiditate facere ut numquam provident. Hic a blanditiis numquam dicta laborum. Amet qui exercitationem maiores, voluptatem, omnis praesentium quae inventore rem voluptate molestiae similique, accusantium id delectus reiciendis assumenda. Assumenda provident odit quis veritatis hic est facere temporibus optio id voluptates voluptas at alias deleniti, ipsam quia labore sed eligendi consequatur ratione! Accusantium fugiat consequatur odio neque saepe. Voluptates et recusandae in adipisci quo eligendi. Ex corrupti, porro mollitia provident commodi exercitationem consectetur eaque quae incidunt rem dolor vero pariatur, voluptatibus consequatur sequi animi obcaecati ducimus minima nam repellat magnam repellendus dicta? Accusamus cupiditate non omnis, soluta dolor molestias veniam dolore aspernatur ex voluptates consequatur, eius tenetur corporis sed itaque quos illo, fuga ducimus explicabo accusantium praesentium minus error esse. Repudiandae ut incidunt, perspiciatis saepe, laborum voluptatibus, laboriosam eius facilis iste at adipisci veritatis natus esse accusantium ipsa ullam repellat corrupti aliquid voluptatem asperiores accusamus. Temporibus sapiente repudiandae saepe iste veritatis ipsa, harum quod, distinctio corrupti quam error! Laudantium corporis ut quia non odit ad sequi dolore ea vitae nobis accusantium consequuntur minus expedita porro distinctio nam, provident enim qui culpa eum ducimus? Odit libero minima doloribus mollitia dolores?";
+
+        let index = 0;
+        function writeText() {
+            let t = text.slice(0, index);
+            document.querySelector("body").innerText = t;
+            index++;
+        }
+
+        setInterval(writeText, 10);
+
+    </script>
+</body>
+
+</html>
